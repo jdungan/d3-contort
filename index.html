@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.3.13/d3.min.js" charset="utf-8"></script>
+
+</head>
+<body>
+
+<div id='header'></div>  
+<svg height=1000 width=1000></svg>
+
+</body>
+
+<script src='d3-contort.js'></script>
+<script>
+
+data = [1,2,3,4,5,6,7]
+colors = ['red','blue','green','orange','purple','yellow','black']
+svg=d3.select('svg')
+
+// d3.select('#header').selectAll('div')
+//   .data(data)
+//   .enter()
+//   .append('div')
+//   .text(function (d,i) {
+//       return d
+//   })
+g = svg.insert('g').translate(100).render()
+
+g.selectAll('rect')
+  .data(data)
+  .enter()
+  .append('rect')
+  .attr({
+    height:150,
+    width:150,
+    fill: function (d,i) {
+      return colors[i] 
+    },
+    opacity:.5,
+  })
+
+  d3.selectAll('rect')
+  .translate(function (d,i) {
+    return d*15
+  })
+  .scale(function (d,i) {
+    return 1/d
+  })
+  .rotate(function (d,i) {
+    return i*15
+  })
+  .animate({duration:4000,ease:'cubic'})
+
+
+</script>
+
+
+</html>
