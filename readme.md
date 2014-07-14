@@ -67,10 +67,12 @@ Performs a d3 transition using the elements current Transform values.  The trans
   d3-contort works by storing an instance of a Transform object to a property called \_\_transform\_\_ of a selected element.  The main reason for this object is to store the current transform state.  For the most part this object works behind the scenes and you don't have to mess with it.  Just in case...
   
 ###Transform.toString()
-    Returns a string suitable for the d3.transform attr.  The string contains all transform properties (e.g. 'translate(10,10) scale(1,1) rotations(45)')
+
+Returns a string suitable for the d3.transform attr.  The string contains all transform properties (e.g. 'translate(10,10) scale(1,1) rotations(45)')
   
 ###Transform.order
-    This is an array that sets the order of the d3 attr transform string.  This is very important to the outcome of combined changes such as translation and rotation.
+
+This is an array that sets the order of the d3 attr transform string.  This is very important to the outcome of combined changes such as translation and rotation.
     
   
   
