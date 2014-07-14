@@ -1,3 +1,4 @@
+# Some helper classses
 class xyValue
   constructor: (@x=0,@y=0) ->
   setValue: (newValue,increment) ->
@@ -18,21 +19,23 @@ class xyValue
           @y = newValue.y ?= newValue.x
   toString: -> @x + "," + @y
    
-class numValue
+class degreeValue
   constructor: (@number=0)->
   setValue: (newValue,increment)->
     if increment then newValue += @number
     @number = Math.round((newValue % 360 + ((if newValue >= 0 then 0 else 360))))  unless @number is newValue
   toString: -> @number
 
-
+# The transform object
 class Transform 
   constructor: ()->
      @translate ?= new xyValue 0,0
      @scale ?= new xyValue 1,1
-     @rotate ?= new numValue
+     @rotate ?= new degreeValue
+     @skewX ?= new degreeValue
+     @skewY ?= new degreeValue
      
-Transform::order = -> ["translate","scale","rotate"]
+Transform::order = -> ["translate","scale","rotate","skewX","skewY"]
 
 Transform::toString = ->
     @order().map(
@@ -60,7 +63,7 @@ d3.selection::render = ->
       d3.select(e).attr "transform", e.__transform__.toString()
   @       
 
-d3.selection::animate = (@options={}) ->
+d3.selection::animate = (options={}) ->
   duration = options.duration ?= 500
   ease = options.ease ?= "ease"
   opacity = options.opacity ?= "1"
@@ -73,5 +76,18 @@ d3.selection::animate = (@options={}) ->
         .attr({transform: e.__transform__.toString(),"opacity": opacity})
   @       
   
+d3.selection::sequence = (options={}) ->
+  duration = options.duration ?= 500
+  ease = options.ease ?= "ease"
+  opacity = options.opacity ?= "1"
+  transition = d3.select(e).transition()
+  for e in @[0]
+    do (e)->
+      e.__transform__ ?= new Transform        
+      transition.transition()
+        .duration(duration)
+        .ease(d3.ease(ease))
+        .attr({transform: e.__transform__.toString(),"opacity": opacity})
+  @
   
 
