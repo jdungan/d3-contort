@@ -1,7 +1,7 @@
 
-# d3-contort
+# d3-contort.js
 
-Extends the d3's selection functions to allow you to make css transforms on a group of elements. It allows you to chain transformations together in the same way d3 allows you to chain attributes.  It also lets you forget about the sting manipulation needed for the transform attribute.
+Extends d3's selection functions to allow you to make css transforms on a group of elements. It allows you to chain transformations together in the same way d3 allows you to chain attributes.  It also lets you forget about the sting manipulation needed for the transform attribute.
 
 ##Examples
 
