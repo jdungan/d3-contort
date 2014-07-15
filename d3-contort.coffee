@@ -46,6 +46,7 @@ Transform::toString = ->
 for name in Transform::order()
   do (name) ->
     d3.selection::[name] = (value,increment=false) ->
+      len = @[0].length
       for e,i in @[0]
         do (e)->
           e.__transform__  ?= new Transform
@@ -53,7 +54,7 @@ for name in Transform::order()
             when 'number','object'
               e.__transform__[name].setValue value,increment
             when 'function'
-              e.__transform__[name].setValue value(e.__data__,i,@[0].length),increment
+              e.__transform__[name].setValue value(e.__data__,i,len),increment
       @
   
 d3.selection::render = ->

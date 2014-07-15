@@ -96,10 +96,11 @@
   _ref = Transform.prototype.order();
   _fn = function(name) {
     return d3.selection.prototype[name] = function(value, increment) {
-      var e, i, _fn1, _j, _len1, _ref1;
+      var e, i, len, _fn1, _j, _len1, _ref1;
       if (increment == null) {
         increment = false;
       }
+      len = this[0].length;
       _ref1 = this[0];
       _fn1 = function(e) {
         if (e.__transform__ == null) {
@@ -110,7 +111,7 @@
           case 'object':
             return e.__transform__[name].setValue(value, increment);
           case 'function':
-            return e.__transform__[name].setValue(value(e.__data__, i, this[0].length), increment);
+            return e.__transform__[name].setValue(value(e.__data__, i, len), increment);
         }
       };
       for (i = _j = 0, _len1 = _ref1.length; _j < _len1; i = ++_j) {
