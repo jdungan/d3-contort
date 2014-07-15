@@ -53,41 +53,29 @@ for name in Transform::order()
             when 'number','object'
               e.__transform__[name].setValue value,increment
             when 'function'
-              e.__transform__[name].setValue value(e.__data__,i),increment
+              e.__transform__[name].setValue value(e.__data__,i,@[0].length),increment
       @
   
 d3.selection::render = ->
   for e in @[0]
     do (e)->
       e.__transform__  ?= new Transform
-      d3.select(e).attr "transform", e.__transform__.toString()
+      e.setAttribute "transform", e.__transform__.toString()
   @       
 
 d3.selection::animate = (options={}) ->
   duration = options.duration ?= 500
   ease = options.ease ?= "ease"
   opacity = options.opacity ?= "1"
+  delay = options.delay ?= 0
   for e in @[0]
     do (e)->
       e.__transform__ ?= new Transform        
       d3.select(e).transition()
         .duration(duration)
+        .delay(delay)
         .ease(d3.ease(ease))
         .attr({transform: e.__transform__.toString(),"opacity": opacity})
   @       
-  
-d3.selection::sequence = (options={}) ->
-  duration = options.duration ?= 500
-  ease = options.ease ?= "ease"
-  opacity = options.opacity ?= "1"
-  transition = d3.select(e).transition()
-  for e in @[0]
-    do (e)->
-      e.__transform__ ?= new Transform        
-      transition.transition()
-        .duration(duration)
-        .ease(d3.ease(ease))
-        .attr({transform: e.__transform__.toString(),"opacity": opacity})
-  @
   
 

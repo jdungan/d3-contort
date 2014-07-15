@@ -110,7 +110,7 @@
           case 'object':
             return e.__transform__[name].setValue(value, increment);
           case 'function':
-            return e.__transform__[name].setValue(value(e.__data__, i), increment);
+            return e.__transform__[name].setValue(value(e.__data__, i, this[0].length), increment);
         }
       };
       for (i = _j = 0, _len1 = _ref1.length; _j < _len1; i = ++_j) {
@@ -132,7 +132,7 @@
       if (e.__transform__ == null) {
         e.__transform__ = new Transform;
       }
-      return d3.select(e).attr("transform", e.__transform__.toString());
+      return e.setAttribute("transform", e.__transform__.toString());
     };
     for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
       e = _ref1[_j];
@@ -142,45 +142,20 @@
   };
 
   d3.selection.prototype.animate = function(options) {
-    var duration, e, ease, opacity, _fn1, _j, _len1, _ref1;
+    var delay, duration, e, ease, opacity, _fn1, _j, _len1, _ref1;
     if (options == null) {
       options = {};
     }
     duration = options.duration != null ? options.duration : options.duration = 500;
     ease = options.ease != null ? options.ease : options.ease = "ease";
     opacity = options.opacity != null ? options.opacity : options.opacity = "1";
+    delay = options.delay != null ? options.delay : options.delay = 0;
     _ref1 = this[0];
     _fn1 = function(e) {
       if (e.__transform__ == null) {
         e.__transform__ = new Transform;
       }
-      return d3.select(e).transition().duration(duration).ease(d3.ease(ease)).attr({
-        transform: e.__transform__.toString(),
-        "opacity": opacity
-      });
-    };
-    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-      e = _ref1[_j];
-      _fn1(e);
-    }
-    return this;
-  };
-
-  d3.selection.prototype.sequence = function(options) {
-    var duration, e, ease, opacity, transition, _fn1, _j, _len1, _ref1;
-    if (options == null) {
-      options = {};
-    }
-    duration = options.duration != null ? options.duration : options.duration = 500;
-    ease = options.ease != null ? options.ease : options.ease = "ease";
-    opacity = options.opacity != null ? options.opacity : options.opacity = "1";
-    transition = d3.select(e).transition();
-    _ref1 = this[0];
-    _fn1 = function(e) {
-      if (e.__transform__ == null) {
-        e.__transform__ = new Transform;
-      }
-      return transition.transition().duration(duration).ease(d3.ease(ease)).attr({
+      return d3.select(e).transition().duration(duration).delay(delay).ease(d3.ease(ease)).attr({
         transform: e.__transform__.toString(),
         "opacity": opacity
       });

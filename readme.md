@@ -11,7 +11,7 @@ Extends d3's selection functions to allow you to make css transforms on a group 
 
 ###Chained transforms
 
-  d3.select('rect').rotate(45).scale(1.5).render()
+  d3.selectAll('rect').rotate(45).scale(1.5).render()
 
 ###Chained transition
 
@@ -19,17 +19,24 @@ Extends d3's selection functions to allow you to make css transforms on a group 
 
 ##Property Functions
 
-**selection.translate(value,[increment])**
 
-  Accepts either a function, number or object.  If _value_ is a function is will be passed the element's datum and index.  This function must return a number or object with x and y properties. Passing a number will change both x and y to that number. Passing an object with x and y propoerties (e.g. {x:10,y:25}) will change the corresponding x and y value of the property.  Objects passed with one x or y, or neither will not change the value of the missing property.
+### XY properties
+
+**selection.translate(value,[increment])**
 
 **selection.scale(value,[increment])**
 
-  Accepts either a function, number or object.  If _value_ is a function is will be passed the element's datum and index.  This function must return a number or object with x and y properties. Passing a number will change both x and y to that number. Passing an object with x and y propoerties (e.g. {x:10,y:25}) will change the corresponding x and y value of the property.  Objects passed with one x or y, or neither will not change the value of the missing property.
+  Accepts either a function, number or object.  If _value_ is a function is will be passed the element's datum, index, and length of the selection.  This function must return a number or object with x and y properties. Passing a number will change both x and y to that number. Passing an object with x and y propoerties (e.g. {x:10,y:25}) will change the corresponding x and y value of the property.  Objects passed with one x or y, or neither will not change the value of the missing property.
+
+###Degree properties
 
 **selection.rotate(value,[increment])**
 
-  Accepts a function or a number.  If _value_ is a function is will be passed the elements datum and index.  This function must return a number. 
+**selection.skewX(value,[increment])**
+
+**selection.skewY(value,[increment])**
+
+  Accepts a function or a number.  If _value_ is a function is will be passed the elements datum, index, and length of the selection.  This function must return a number. 
   
   The number is converted to an integer between -360 and 360.
 
@@ -55,6 +62,8 @@ Performs a d3 transition using the elements current Transform values.  The trans
 **duration:** defaults to 500ms 
 
 **ease:** defaults to "ease"
+
+**delay:** defaults to 0
 
 **opacity:** defaults to "1"
   

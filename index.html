@@ -27,15 +27,15 @@ svg=d3.select('svg')
 //   .text(function (d,i) {
 //       return d
 //   })
-g = svg.insert('g').translate(100).render()
+g = svg.insert('g').translate(50).render()
 
 g.selectAll('rect')
   .data(data)
   .enter()
   .append('rect')
   .attr({
-    height:150,
-    width:150,
+    height:300,
+    width:300,
     fill: function (d,i) {
       return colors[i] 
     },
@@ -44,15 +44,15 @@ g.selectAll('rect')
 
   d3.selectAll('rect')
   .translate(function (d,i) {
-    return d*15
+    return d*50
   })
   .scale(function (d,i) {
-    return 1/d
+    return (1/d)+.5
   })
   .rotate(function (d,i) {
     return i*15
   })
-  .animate({duration:4000})
+  .animate({duration:1000})
 
 
 </script>
