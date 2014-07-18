@@ -169,5 +169,3 @@
   };
 
 }).call(this);
-
-//# sourceMappingURL=d3-contort.map

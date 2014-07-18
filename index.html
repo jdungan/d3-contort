@@ -18,41 +18,51 @@
 
 data = [1,2,3,4,5,6,7]
 colors = ['red','blue','green','orange','purple','yellow','black']
+
+
+var nodes = d3.range(200).map(function() { return {rand: Math.random()}; }),
+    color = d3.scale.category10();
+    
 svg=d3.select('svg')
 
-// d3.select('#header').selectAll('div')
-//   .data(data)
-//   .enter()
-//   .append('div')
-//   .text(function (d,i) {
-//       return d
-//   })
-g = svg.insert('g').translate(50).render()
+g = svg.insert('g')
+  .translate({x:150,y:150})
+  .render()
 
 g.selectAll('rect')
-  .data(data)
+  .data(nodes)
   .enter()
   .append('rect')
   .attr({
-    height:300,
-    width:300,
-    fill: function (d,i) {
-      return colors[i] 
-    },
-    opacity:.5,
+    height:10,
+    width:10,
+    opacity:.1,
+    'stroke':'black',
+    'stroke-width':.05
   })
+  .style("fill", function(d, i) { return color(i % 7); });
 
   d3.selectAll('rect')
   .translate(function (d,i) {
-    return d*50
+    dirX=Math.random() > .5 ? 1 : -1
+    dirY=Math.random() > .5 ? 1 : -1
+    
+    return {x:Math.random()*75*dirX,y:Math.random()*75*dirY}
   })
   .scale(function (d,i) {
-    return (1/d)+.5
+    
+    return d.rand * 10
   })
   .rotate(function (d,i) {
-    return i*15
+    return d.rand*360
   })
-  .animate({duration:1000})
+  .skewX(function (d,i) {
+    return d.rand*360 % 15
+  })
+  .skewY(function (d,i) {
+    return d.rand*360 % 15
+  })
+  .animate({duration:500,ease:'linear',opacity:'.9'})
 
 
 </script>
