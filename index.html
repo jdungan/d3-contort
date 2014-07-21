@@ -4,80 +4,89 @@
 <head>
   
   <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.3.13/d3.min.js" charset="utf-8"></script>
-
+  <script src='d3-contort.js'></script>
 </head>
 <body>
-
-<h2>d3-contort.js</h2>
-<svg height=400 width=1000></svg>
-
-<div id='code'>
-
-  <p>
-
-    
-  </p>
-</div>  
-
-
+  <a href="https://github.com/jdungan/d3-contort"><img style="position: absolute; top: 0; left: 0; border: 0;"    src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+  <svg ></svg>
 </body>
 
-<script src='d3-contort.js'></script>
+
 
 <script>
-
-data = [1,2,3,4,5,6,7]
-colors = ['red','blue','green','orange','purple','yellow','black']
-nodes = d3.range(200).map(function() { return {rand: Math.random()}; })
-color = d3.scale.category10();
+  color = d3.scale.category10();
+  wHeight = window.innerHeight
+  wWidth = window.innerWidth
     
-svg=d3.select('svg')
+  svg=d3.select('svg')
+      .style({
+        height : wHeight,
+        width : wWidth
+      })  
 
-g = svg.insert('g')
-  .scale(3)
-  .translate(200)
-  .render()
+  g = svg.insert('g')
+    .translate(wHeight/2,wWidth/2)
+    .render()
+ 
+  function confetti() {
+  
+    nodes = d3.range(100).map(function() { return Math.random(); })
+    
+    rects = g.selectAll('rect').data(nodes, function(d) { return d; })
+    
+    rects.enter()
+      .append('rect')
+      .attr({
+        height : function () {
+          return wHeight * 0.025 * Math.random()
+        },
+        width : function () {
+          return wHeight * 0.025 * Math.random()
+        } ,
+        opacity : function (d,i) {
+          return ''+d+.3
+        },
+        'stroke' : 'black',
+        'stroke-width' : 0.5
+      })
+      .style("fill", function(d, i) { return color(i % 10); })
+      
 
-g.selectAll('rect')
-  .data(nodes)
-  .enter()
-  .append('rect')
-  .attr({
-    height:10,
-    width:10,
-    opacity:.1,
-    'stroke':'black',
-    'stroke-width':.05
-  })
-  .style("fill", function(d, i) { return color(i % 7); });
 
-d3.selectAll('rect')
-  .translate(function (d,i) {
-    dirX=Math.random() > .5 ? 1 : -1
-    dirY=Math.random() > .5 ? 1 : -1
-    return {x:Math.random()*100*dirX,y:Math.random()*100*dirY}
-  })
-  .scale(function (d,i) {
-    return d.rand * 3
-  })
-  .rotate(function (d,i) {
-    return Math.random()*360
-  })
-  .skewX(function (d,i) {
-    return Math.random()*360 % 25
-  })
-  .skewY(function (d,i) {
-    return Math.random()*360 % 25
-  })
-  .animate({
-    duration: function (d,i) {
-      return Math.random()*3000
-    },
-    ease:'linear',
-    opacity: function (d,i) {
-      return Math.random()+.1
-    },
-  })
+    rects
+      .translate(function (d,i) {
+        dirX=Math.random() > .5 ? 3 : -3
+        dirY=Math.random() > .5 ? 3 : -3
+        return {x:Math.random()*wWidth*dirX,y:Math.random()*wHeight*dirY}
+      })
+      .scale(function (d,i) {
+        return Math.random() * wWidth * 0.1 
+      })
+      .rotate(function (d,i) {
+        return Math.random()*360
+      })
+      .skewX(function (d,i) {
+        return Math.random()*360 % 25
+      })
+      .skewY(function (d,i) {
+        return Math.random()*360 % 25
+      })
+      .animate({
+        duration: 5000,
+        ease:'cubic',
+      })
+      .transition()
+        .delay(6000)
+        .duration(2000)
+        .ease(d3.ease('ease'))
+        .attr('opacity','0')
+      .remove()
+        
+  }
+  confetti()
+  var intervalID = window.setInterval(confetti, 1500)
+
+
 
 </script>
 
