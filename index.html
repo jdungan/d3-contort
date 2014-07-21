@@ -8,17 +8,26 @@
 </head>
 <body>
 
-<div id='header'></div>  
-<svg height=1000 width=1000></svg>
+<h2>d3-contort.js</h2>
+<svg height=400 width=1000></svg>
+
+<div id='code'>
+
+  <p>
+
+    
+  </p>
+</div>  
+
 
 </body>
 
 <script src='d3-contort.js'></script>
+
 <script>
 
 data = [1,2,3,4,5,6,7]
 colors = ['red','blue','green','orange','purple','yellow','black']
-
 
 var nodes = d3.range(200).map(function() { return {rand: Math.random()}; }),
     color = d3.scale.category10();
@@ -26,7 +35,8 @@ var nodes = d3.range(200).map(function() { return {rand: Math.random()}; }),
 svg=d3.select('svg')
 
 g = svg.insert('g')
-  .translate({x:150,y:150})
+  .scale(3)
+  .translate(200)
   .render()
 
 g.selectAll('rect')
@@ -42,16 +52,14 @@ g.selectAll('rect')
   })
   .style("fill", function(d, i) { return color(i % 7); });
 
-  d3.selectAll('rect')
+d3.selectAll('rect')
   .translate(function (d,i) {
     dirX=Math.random() > .5 ? 1 : -1
     dirY=Math.random() > .5 ? 1 : -1
-    
     return {x:Math.random()*75*dirX,y:Math.random()*75*dirY}
   })
   .scale(function (d,i) {
-    
-    return d.rand * 10
+    return d.rand * 3
   })
   .rotate(function (d,i) {
     return d.rand*360
@@ -66,6 +74,5 @@ g.selectAll('rect')
 
 
 </script>
-
 
 </html>
