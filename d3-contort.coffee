@@ -65,10 +65,11 @@ d3.selection::render = ->
   @       
 
 d3.selection::animate = (options={}) ->
-  duration = options.duration ?= 500
-  ease = options.ease ?= "ease"
-  opacity = options.opacity ?= "1"
-  delay = options.delay ?= 0
+  {duration,ease,opacity,delay} = options
+  duration ?= 500
+  ease ?= "ease"
+  opacity ?= "1"
+  delay ?= 0
   for e in @[0]
     do (e)->
       e.__transform__ ?= new Transform        

@@ -147,10 +147,19 @@
     if (options == null) {
       options = {};
     }
-    duration = options.duration != null ? options.duration : options.duration = 500;
-    ease = options.ease != null ? options.ease : options.ease = "ease";
-    opacity = options.opacity != null ? options.opacity : options.opacity = "1";
-    delay = options.delay != null ? options.delay : options.delay = 0;
+    duration = options.duration, ease = options.ease, opacity = options.opacity, delay = options.delay;
+    if (duration == null) {
+      duration = 500;
+    }
+    if (ease == null) {
+      ease = "ease";
+    }
+    if (opacity == null) {
+      opacity = "1";
+    }
+    if (delay == null) {
+      delay = 0;
+    }
     _ref1 = this[0];
     _fn1 = function(e) {
       if (e.__transform__ == null) {
