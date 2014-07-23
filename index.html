@@ -9,7 +9,7 @@
 <body>
 
 <h2>d3-contort.js</h2>
-<svg height=400 width=1000></svg>
+<svg height=300 width=400></svg>
 <p>
 <a href='https://github.com/jdungan/d3-contort'>It's on Github</a>
   
@@ -23,14 +23,14 @@
 
 data = [1,2,3,4,5,6,7]
 colors = ['red','blue','green','orange','purple','yellow','black']
-nodes = d3.range(200).map(function() { return {rand: Math.random()}; })
+nodes = d3.range(300).map(function() { return {rand: Math.random()}; })
 color = d3.scale.category10();
     
 svg=d3.select('svg')
 
 g = svg.insert('g')
-  .scale(3)
-  .translate(200)
+  .scale(1.5)
+  .translate(150)
   .render()
 
 g.selectAll('rect')
@@ -38,8 +38,8 @@ g.selectAll('rect')
   .enter()
   .append('rect')
   .attr({
-    height:10,
-    width:10,
+    height:5,
+    width:5,
     opacity:.1,
     'stroke':'black',
     'stroke-width':.05
@@ -50,7 +50,7 @@ d3.selectAll('rect')
   .translate(function (d,i) {
     dirX=Math.random() > .5 ? 1 : -1
     dirY=Math.random() > .5 ? 1 : -1
-    return {x:Math.random()*100*dirX,y:Math.random()*100*dirY}
+    return {x:Math.random()*75*dirX,y:Math.random()*75*dirY}
   })
   .scale(function (d,i) {
     return d.rand * 3
@@ -66,7 +66,7 @@ d3.selectAll('rect')
   })
   .animate({
     duration: function (d,i) {
-      return Math.random()*3000
+      return Math.random()*5000
     },
     ease:'linear',
     opacity: function (d,i) {
