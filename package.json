@@ -1,0 +1,34 @@
+{
+    "author": "John Dungan<johnadungan@gmail.com>",
+    "dependencies": {
+        "d3": "~3.3.13"
+    },
+    "description": "Extends d3's selection functions to allow you to make css transforms on a group of elements.",
+    "homepage": "https://jdungan.github.io/d3-contort",
+    "keywords": [
+        "chaining",
+        "d3",
+        "d3.js",
+        "animate",
+        "scalle",
+        "skew",
+        "transform",
+        "translate",
+        "rotate"
+    ],
+    "license": "MIT",
+    "main": "d3-contort.js",
+    "name": "d3-contort",
+    "readmeFilename": "readme.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/jdungan/d3-contort"
+    },
+    "tags": [
+        "d3",
+        "transform",
+        "chain",
+        "animate"
+    ],
+    "version": "0.0.5"
+}

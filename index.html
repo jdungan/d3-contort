@@ -7,13 +7,10 @@
 
 </head>
 <body>
-
+<a href="https://github.com/jdungan/d3-contort"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+<svg ></svg>
 <h2>d3-contort.js</h2>
-<svg height=300 width=400></svg>
-<p>
-<a href='https://github.com/jdungan/d3-contort'>It's on Github</a>
-  
-</p>
+
 
 </body>
 
@@ -25,12 +22,20 @@ data = [1,2,3,4,5,6,7]
 colors = ['red','blue','green','orange','purple','yellow','black']
 nodes = d3.range(300).map(function() { return {rand: Math.random()}; })
 color = d3.scale.category10();
+wHeight = window.innerHeight
+wWidth = window.innerWidth
+midHeight = wHeight/2
+midWidth = wWidth/2
     
 svg=d3.select('svg')
+    .style({
+      height : wHeight,
+      width : wWidth
+    })  
 
 g = svg.insert('g')
   .scale(1.5)
-  .translate(150)
+  .translate(midWidth,midHeight)
   .render()
 
 g.selectAll('rect')
@@ -38,8 +43,8 @@ g.selectAll('rect')
   .enter()
   .append('rect')
   .attr({
-    height:5,
-    width:5,
+    height:wHeight*.025,
+    width:wWidth*.025,
     opacity:.1,
     'stroke':'black',
     'stroke-width':.05
@@ -50,7 +55,7 @@ d3.selectAll('rect')
   .translate(function (d,i) {
     dirX=Math.random() > .5 ? 1 : -1
     dirY=Math.random() > .5 ? 1 : -1
-    return {x:Math.random()*75*dirX,y:Math.random()*75*dirY}
+    return {x:Math.random()*midWidth*dirX,y:Math.random()*midHeight*dirY}
   })
   .scale(function (d,i) {
     return d.rand * 3
