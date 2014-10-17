@@ -7,12 +7,10 @@
   <script src='d3-contort.js'></script>
 </head>
 <body>
-  <a href="https://github.com/jdungan/d3-contort"><img style="position: absolute; top: 0; left: 0; border: 0;"    src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
-  <svg ></svg>
+  <a href="https://github.com/jdungan/d3-contort">
+    <img style="position: absolute; top: 0; left: 0; border: 0;"  src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+  <svg></svg>
 </body>
-
-
-
 <script>
   color = d3.scale.category10();
   wHeight = window.innerHeight
@@ -25,69 +23,77 @@
       })  
 
   g = svg.insert('g')
-    .translate(wHeight/2,wWidth/2)
+    .translate({y:wHeight/2,x:wWidth/2})
     .render()
  
   function confetti() {
   
     nodes = d3.range(100).map(function() { return Math.random(); })
     
-    rects = g.selectAll('rect').data(nodes, function(d) { return d; })
+    g.selectAll('rect').data(nodes, function(d) { return d; })
     
-    rects.enter()
-      .append('rect')
+      .enter()
+      .insert('rect',':first-child')
       .attr({
         height : function () {
-          return wHeight * 0.025 * Math.random()
+          return wHeight * 0.05 * Math.random()
         },
         width : function () {
-          return wHeight * 0.025 * Math.random()
+          return wHeight * 0.05 * Math.random()
         } ,
         opacity : function (d,i) {
-          return ''+d+.3
+          return ''+(d * 1) + 0.2
         },
         'stroke' : 'black',
-        'stroke-width' : 0.5
-      })
+        'stroke-width' : 0.45      
+      })      
       .style("fill", function(d, i) { return color(i % 10); })
-      
+    
+    //EXAMPLE OF D3-CONTORT INCREMENT
+      .translate(function (d,i,e) {
+          dist = wWidth/3 * Math.random()
+          dirX=Math.random() > .5 ? dist : -dist
+          dirY=Math.random() > .5 ? dist : -dist
+          return {x:dirX* Math.random(),y:dirY* Math.random()}
+      },true)
 
-
-    rects
-      .translate(function (d,i) {
-        dirX=Math.random() > .5 ? 3 : -3
-        dirY=Math.random() > .5 ? 3 : -3
-        return {x:Math.random()*wWidth*dirX,y:Math.random()*wHeight*dirY}
+      .animate({
+        duration: 2500,
+        ease:'ease',
       })
-      .scale(function (d,i) {
-        return Math.random() * wWidth * 0.1 
+    // // D3-CONTORT FUNCTIONS IN ACTION
+      .skewX(function (d,i) {
+        return Math.random()*360 % 45
+      })
+      .skewY(function (d,i) {
+        return Math.random()*360 % 45
       })
       .rotate(function (d,i) {
         return Math.random()*360
       })
-      .skewX(function (d,i) {
-        return Math.random()*360 % 25
+      .scale(function (d,i) {
+        return Math.random() * Math.min(wHeight,wWidth)*0.025
       })
-      .skewY(function (d,i) {
-        return Math.random()*360 % 25
+      .translate(function (d,i) {
+          dist = 5
+          dirX=Math.random() > .5 ? dist : -dist
+          dirY=Math.random() > .5 ? dist : -dist
+          return {x:Math.random()*wWidth*dirX,y:Math.random()*wHeight*dirY}
       })
       .animate({
-        duration: 5000,
-        ease:'cubic',
+        delay : 2500,
+        duration : 5000,
+        ease : 'cubic',
       })
+      //STANDARD D3 TRANSITION TO FINISH
       .transition()
-        .delay(6000)
-        .duration(2000)
-        .ease(d3.ease('ease'))
+        .delay(7500)
+        .duration(250)
         .attr('opacity','0')
       .remove()
-        
+
   }
   confetti()
   var intervalID = window.setInterval(confetti, 1500)
-
-
-
-</script>
-
+  </script>
 </html>
