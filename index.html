@@ -8,23 +8,10 @@
 </head>
 <body>
   <a href="https://github.com/jdungan/d3-contort">
-    <img style="position: absolute; top: 0; left: 0; border: 0;"  src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+    <img style="position: absolute; top: 0; left: 0; border: 0;"       src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
   <svg></svg>
 </body>
 <script>
-  color = d3.scale.category10();
-  wHeight = window.innerHeight
-  wWidth = window.innerWidth
-    
-  svg=d3.select('svg')
-      .style({
-        height : wHeight,
-        width : wWidth
-      })  
-
-  g = svg.insert('g')
-    .translate({y:wHeight/2,x:wWidth/2})
-    .render()
  
   function confetti() {
   
@@ -75,25 +62,43 @@
         return Math.random() * Math.min(wHeight,wWidth)*0.025
       })
       .translate(function (d,i) {
-          dist = 5
+          // dist = 5
           dirX=Math.random() > .5 ? dist : -dist
           dirY=Math.random() > .5 ? dist : -dist
           return {x:Math.random()*wWidth*dirX,y:Math.random()*wHeight*dirY}
       })
       .animate({
         delay : 2500,
-        duration : 5000,
+        duration : 2500,
         ease : 'cubic',
       })
       //STANDARD D3 TRANSITION TO FINISH
       .transition()
-        .delay(7500)
-        .duration(250)
+        .delay(7000)
+        .duration(2500)
         .attr('opacity','0')
       .remove()
 
   }
-  confetti()
-  var intervalID = window.setInterval(confetti, 1500)
+  
+   window.addEventListener("load", function(event) {
+      color = d3.scale.category10();
+      wHeight = window.innerHeight
+      wWidth = window.innerWidth
+      body = d3.select('body')
+
+      svg=d3.select('svg').style({
+            height : wHeight+'px',
+            width : wWidth+'px'
+         })
+
+      g = svg.insert('g')
+         .translate({y:wHeight/2,x:wWidth/2})
+         .render()
+
+      var intervalID = window.setInterval(confetti, 1500)
+
+   });
+  
   </script>
 </html>
