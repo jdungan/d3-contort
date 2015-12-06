@@ -13,7 +13,7 @@
 </body>
 <script>
  
-  function confetti() {
+  function confetti(duration) {
   
     nodes = d3.range(100).map(function() { return Math.random(); })
     
@@ -38,16 +38,12 @@
     
     //EXAMPLE OF D3-CONTORT INCREMENT
       .translate(function (d,i,e) {
-          dist = wWidth/3 * Math.random()
+          dist = wWidth * Math.random()
           dirX=Math.random() > .5 ? dist : -dist
           dirY=Math.random() > .5 ? dist : -dist
           return {x:dirX* Math.random(),y:dirY* Math.random()}
       },true)
 
-      .animate({
-        duration: 2500,
-        ease:'ease',
-      })
     // // D3-CONTORT FUNCTIONS IN ACTION
       .skewX(function (d,i) {
         return Math.random()*360 % 45
@@ -59,23 +55,30 @@
         return Math.random()*360
       })
       .scale(function (d,i) {
-        return Math.random() * Math.min(wHeight,wWidth)*0.025
+        return Math.random() * Math.min(wHeight,wWidth)*0.0025
       })
-      .translate(function (d,i) {
-          // dist = 5
-          dirX=Math.random() > .5 ? dist : -dist
-          dirY=Math.random() > .5 ? dist : -dist
-          return {x:Math.random()*wWidth*dirX,y:Math.random()*wHeight*dirY}
-      })
+
       .animate({
-        delay : 2500,
-        duration : 2500,
-        ease : 'cubic',
+        duration: duration,
+        ease:'cubic',
       })
+
+      // .translate(function (d,i) {
+      //     // dist = 5
+      //     dirX=Math.random() > .5 ? dist : -dist
+      //     dirY=Math.random() > .5 ? dist : -dist
+      //     return {x:Math.random()*wWidth*dirX,y:Math.random()*wHeight*dirY}
+      // })
+      // .animate({
+      //   delay : 1000,
+      //   duration : 6000,
+      //   ease : 'cubic',
+      // })
+         
       //STANDARD D3 TRANSITION TO FINISH
       .transition()
-        .delay(7000)
-        .duration(2500)
+        .delay(duration-100)
+        .duration(300)
         .attr('opacity','0')
       .remove()
 
@@ -95,8 +98,10 @@
       g = svg.insert('g')
          .translate({y:wHeight/2,x:wWidth/2})
          .render()
+     
+      repeat_time = 2000
 
-      var intervalID = window.setInterval(confetti, 1500)
+      var intervalID = window.setInterval(confetti, repeat_time/2,repeat_time*2)
 
    });
   
