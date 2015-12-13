@@ -15,10 +15,9 @@
  
   function confetti(duration) {
   
-    nodes = d3.range(100).map(function() { return Math.random(); })
+    nodes = d3.range(150).map(function() { return Math.random(); })
     
     g.selectAll('rect').data(nodes, function(d) { return d; })
-    
       .enter()
       .insert('rect',':first-child')
       .attr({
@@ -38,9 +37,9 @@
     
     //EXAMPLE OF D3-CONTORT INCREMENT
       .translate(function (d,i,e) {
-          dist = wWidth * Math.random()
-          dirX=Math.random() > .5 ? dist : -dist
-          dirY=Math.random() > .5 ? dist : -dist
+          dist = (wWidth*2 * Math.random())+wWidth
+          dirX= Math.random() > .5 ? dist : -dist
+          dirY= Math.random() > .5 ? dist : -dist
           return {x:dirX* Math.random(),y:dirY* Math.random()}
       },true)
 
@@ -62,23 +61,11 @@
         duration: duration,
         ease:'cubic',
       })
-
-      // .translate(function (d,i) {
-      //     // dist = 5
-      //     dirX=Math.random() > .5 ? dist : -dist
-      //     dirY=Math.random() > .5 ? dist : -dist
-      //     return {x:Math.random()*wWidth*dirX,y:Math.random()*wHeight*dirY}
-      // })
-      // .animate({
-      //   delay : 1000,
-      //   duration : 6000,
-      //   ease : 'cubic',
-      // })
          
       //STANDARD D3 TRANSITION TO FINISH
       .transition()
         .delay(duration-100)
-        .duration(300)
+        .duration(1000)
         .attr('opacity','0')
       .remove()
 
